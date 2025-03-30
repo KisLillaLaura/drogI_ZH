@@ -56,6 +56,22 @@
         <button onclick="startFormulaDrawing()">Képlet rajzolás</button>
         <button onclick="goBack()">🔙 Vissza</button>
     </div>
+    <!-- Számolási feladatok almenü -->
+    <div class="submenu" id="szamolasSubMenu">
+        <h2>Számolási feladatok</h2>
+        <button onclick="startSzamolas('el_nem_szappanosithato')">El nem szappanosítható rész tartalmi meghatározása</button>
+        <button onclick="startSzamolas('aszkorbinsav')">Aszkorbinsav tartalmi meghatározása</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+    </div>
+
+<!-- Táblázatkitöltés almenü -->
+    <div class="submenu" id="tablaSubMenu">
+        <h2>Táblázatkitöltés</h2>
+        <button onclick="startTabla('fitokemia')">Drogok fitokémiája</button>
+        <button onclick="startTabla('fitoanalitika')">Általános fitoanalitika</button>
+        <button onclick="startTabla('fitokemia_altalanos')">Általános fitokémia</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+    </div>
 
     <div id="sketchem-container">
         <h2>Rajzold le az alábbi molekulát:</h2>
@@ -115,20 +131,19 @@
         };
 // Függvények frissítése
 
+
 function showSubMenu(type) {
     // Minden elem elrejtése
     document.getElementById("mainMenu").style.display = "none";
     document.getElementById("kepletekSubMenu").style.display = "none";
     document.getElementById("novenyfelismeresSubMenu").style.display = "none";
+    document.getElementById("szamolasSubMenu").style.display = "none";
+    document.getElementById("tablaSubMenu").style.display = "none";
     document.getElementById("sketchem-container").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "none";
 
-    // Almenü megjelenítése
-    if (type === 'kepletek' || type === 'novenyfelismeres') {
-        document.getElementById(type + "SubMenu").style.display = "block";
-    } else {
-        console.error("Ismeretlen almenü típus:", type);
-    }
+    // Kiválasztott almenü megjelenítése
+    document.getElementById(type + "SubMenu").style.display = "block";
 }
 
 function startFormulaRecognition() {
