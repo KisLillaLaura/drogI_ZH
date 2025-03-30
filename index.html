@@ -42,6 +42,14 @@
     </div>
 
     <!-- Almenük -->
+
+    <div class="submenu" id="novenyfelismeresSubMenu">
+        <h2>Növényfelismerés</h2>
+        <button onclick="startMakroszkopikusJatek()">Makroszkópikus felismerés</button>
+        <button onclick="startMikroszkopikusJatek()">Mikroszkópikus felismerés</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+    </div>
+	
     <div class="submenu" id="kepletekSubMenu">
         <h2>Képletek</h2>
         <button onclick="startFormulaRecognition()">Képlet felismerés</button>
@@ -81,6 +89,7 @@
     	<button onclick="newMoleculeRecognition()">Új molekula</button>
     	<button onclick="retryRecognition()">Újrapróbálás</button>
     </div>
+	
 
     <script>
         const molekulaAdatok = {
@@ -110,6 +119,8 @@ function showSubMenu(type) {
     document.getElementById("kepletekSubMenu").style.display = "none";
     document.getElementById("sketchem-container").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "none";
+    document.getElementById("makroszkopikus-container").style.display = "none";
+    document.getElementById("novenyfelismeresSubMenu").style.display = "none";
     
     if (type === 'kepletek') {
         document.getElementById("kepletekSubMenu").style.display = "block";
