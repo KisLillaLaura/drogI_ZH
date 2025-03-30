@@ -28,6 +28,9 @@
 	#kepfelismeres-container {
     	    display: none;
 	}
+	#szamolas-container, #tabla-container {
+    	    display: none;
+	}
     </style>
 </head>
 <body>
@@ -104,6 +107,19 @@
     	<p id="name-output"></p>
     	<button onclick="newMoleculeRecognition()">Új molekula</button>
     	<button onclick="retryRecognition()">Újrapróbálás</button>
+    </div>
+	<!-- Számolási feladatok konténer -->
+    <div id="szamolas-container" class="submenu">
+        <h2 id="szamolas-cim"></h2>
+        <!-- Ide jönnek a számolási feladatok -->
+        <button onclick="goBack()">🔙 Vissza</button>
+    </div>
+
+    <!-- Táblázatkitöltés konténer -->
+    <div id="tabla-container" class="submenu">
+        <h2 id="tabla-cim"></h2>
+        <!-- Ide jönnek a táblázatok -->
+        <button onclick="goBack()">🔙 Vissza</button>
     </div>
 	
 
@@ -224,6 +240,19 @@ function retryRecognition() {
             document.getElementById("smiles-input").value = "";
             document.getElementById("smiles-output").innerHTML = "";
         }
+	    // Számolási feladatok indítása
+function startSzamolas(jatekTipus) {
+    document.getElementById("szamolasSubMenu").style.display = "none";
+    document.getElementById("szamolas-container").style.display = "block";
+    document.getElementById("szamolas-cim").innerText = jatekTipus;
+}
+
+// Táblázatkitöltés indítása
+function startTabla(jatekTipus) {
+    document.getElementById("tablaSubMenu").style.display = "none";
+    document.getElementById("tabla-container").style.display = "block";
+    document.getElementById("tabla-cim").innerText = jatekTipus;
+}
     </script>
 </body>
 </html>
