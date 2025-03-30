@@ -141,8 +141,9 @@ function showSubMenu(type) {
     document.getElementById("tablaSubMenu").style.display = "none";
     document.getElementById("sketchem-container").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "none";
-
-    // Kiválasztott almenü megjelenítése
+    document.getElementById("szamolas-container").style.display = "none"; 
+    document.getElementById("tabla-container").style.display = "none";   
+	
     document.getElementById(type + "SubMenu").style.display = "block";
 }
 
@@ -181,6 +182,8 @@ function retryRecognition() {
             document.getElementById("novenyfelismeresSubMenu").style.display = "none";
             document.getElementById("sketchem-container").style.display = "none";
             document.getElementById("kepfelismeres-container").style.display = "none";
+	    document.getElementById("szamolas-container").style.display = "none";
+    	    document.getElementById("tabla-container").style.display = "none"; 
 	}
         
         function startFormulaDrawing() {
