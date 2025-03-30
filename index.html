@@ -108,6 +108,28 @@
     	<button onclick="newMoleculeRecognition()">Új molekula</button>
     	<button onclick="retryRecognition()">Újrapróbálás</button>
     </div>
+	
+    <div id="makroszkopikus-container" class="submenu">
+    	<h2>Makroszkópikus növényfelismerés</h2>
+    	<img id="noveny-kep" src="" alt="Növény képe" style="max-width: 400px; margin: 20px auto; display: block;">
+    	<div class="input-group">
+        	<label>Növény magyar neve:</label>
+        	<input type="text" id="magyar-noveny">
+    	</div>
+    	<div class="input-group">
+        	<label>Növény latin neve:</label>
+        	<input type="text" id="latin-noveny">
+    	</div>
+    	<div class="input-group">
+        	<label>Növény családja:</label>
+        	<input type="text" id="csalad-noveny">
+    	</div>
+    	<button onclick="checkNoveny()">✅ Ellenőrzés</button>
+    	<button onclick="goBack()">🔙 Vissza</button>
+    	<p id="noveny-eredmeny"></p>
+    	<button onclick="ujNoveny()">Új növény</button>
+    </div>
+
 	<!-- Számolási feladatok konténer -->
     <div id="szamolas-container" class="submenu">
         <h2 id="szamolas-cim"></h2>
