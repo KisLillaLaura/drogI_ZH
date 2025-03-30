@@ -163,6 +163,7 @@ function showSubMenu(type) {
     document.getElementById(type + "SubMenu").style.display = "block";
 }
 
+
 function startFormulaRecognition() {
     document.getElementById("kepletekSubMenu").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "block";
@@ -196,6 +197,8 @@ function retryRecognition() {
     	    document.getElementById("mainMenu").style.display = "block";
             document.getElementById("kepletekSubMenu").style.display = "none";
             document.getElementById("novenyfelismeresSubMenu").style.display = "none";
+	    document.getElementById("szamolasSubMenu").style.display = "none"; // ⬅️ Hiányzott
+    	    document.getElementById("tablaSubMenu").style.display = "none";
             document.getElementById("sketchem-container").style.display = "none";
             document.getElementById("kepfelismeres-container").style.display = "none";
 	    document.getElementById("szamolas-container").style.display = "none";
