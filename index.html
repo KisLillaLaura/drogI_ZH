@@ -146,6 +146,35 @@
             "sikimisav": { smiles: "O=C(O)C=1CC(O)C(O)C(C=1)O", csoport: "Növényi savak", image: "sikimisav.jpg" }
         };
 // Függvények frissítése
+	const novenyAdatok = {
+    	    "Graminis rhizoma": { magyardrog: "Tarackbúza-gyökértörzs", latin: "Agropyrons repens", csalad: "Poaceae", kep: "Graminis_rhizoma.jpg" },
+    	    "Lichen islandicus": { magyardrog: "Izlandi zuzmó", latin: "Cetraria islandica", csalad: "Parmeliaceae", kep: "Lichen_islandicus.jpg" },
+    	    "Acaciae gummi": { magyardrog: "Akáciamézga", latin: "Acacia senegal", csalad: "Fabaceae", kep: "Acaciae_gummi.jpg" },
+   	    "Althae folium": { magyardrog: "Orvosi ziliz levél", latin: "Althaea officinalis", csalad: "Malvaceae", kep: "Althae_folium.jpg" },
+    	    "Anisi stellati fructus": { magyardrog: "Csillagánizs termés", latin: "Illicium verum", csalad: "Schisandraceae", kep: "Anisi_stellati_fructus.jpg" },
+    	    "Cucurbitae semen": { magyardrog: "Tökmag", latin: "Cucurbita pepo", csalad: "Cucurbitaceae", kep: "Cucurbitae_semen.jpg" },
+    	    "Equiseti herba": { magyardrog: "Mezei zsurló hajtás", latin: "Equisetum arvense", csalad: "Equisetaceae", kep: "Equiseti_herba.jpg" },
+     	    "Papaveris semen": { magyardrog: "Mák mag", latin: "Papaver somniferum", csalad: "Papaveraceae", kep: "Papaveris_semen.jpg" },
+    	    "Plantaginis ovatae seminis tegumentum": { magyardrog: "Útifű maghéj", latin: "Plantago ovata", csalad: "Plantaginaceae", kep: "Plantaginis_ovatae_seminis_tegumentum.jpg" },
+    	    "Ricini semen": { magyardrog: "Ricinusmag", latin: "Ricinus communis", csalad: "Euphorbiaceae", kep: "Ricini_semen.jpg" },
+   	    "Salviae hispanicae semen": { magyardrog: "Chia mag", latin: "Salvia hispanica", csalad: "Lamiaceae", kep: "Salviae_hispanicae_semen.jpg" },
+    	    "Sesami semen": { magyardrog: "Szezámmag", latin: "Sesamum indicum", csalad: "Pedaliaceae", kep: "Sesami_semen.jpg" },
+	    "Tiliae flos": { magyardrog: "Hársfa virág", latin: "Tilia cordata", csalad: "Malvaceae", kep: "Tiliae_flos.jpg" },
+	    "Tragacantha": { magyardrog: "Tragakanta gumi", latin: "Astragalus gummifer", csalad: "Fabaceae", kep: "Tragacantha.jpg" },
+	    "Trigonella foenugraeci semen": { magyardrog: "Görögszéna mag", latin: "Trigonella foenum-graecum", csalad: "Fabaceae", kep: "Trigonella_foenugraeci_semen.jpg" },
+	    "Althae radix": { magyardrog: "Orvosi ziliz gyökér", latin: "Althaea officinalis", csalad: "Malvaceae", kep: "Althae_radix.jpg" },
+	    "Malvae folium": { magyardrog: "Mályva levél", latin: "Malva sylvestris", csalad: "Malvaceae", kep: "Malvae_folium.jpg" },
+	    "Plantaginis lanceolatae folium": { magyardrog: "Lándzsás útifű levél", latin: "Plantago lanceolata", csalad: "Plantaginaceae", kep: "Plantaginis_lanceolatae_folium.jpg" },
+	    "Psylli semen": { magyardrog: "Bolhamag", latin: "Plantago psyllium", csalad: "Plantaginaceae", kep: "Psylli_semen.jpg" },
+	    "Pulmonariae folium": { magyardrog: "Tüdőfű levél", latin: "Pulmonaria officinalis", csalad: "Boraginaceae", kep: "Pulmonariae_folium.jpg" },
+	    "Helianthi annui semen": { magyardrog: "Napraforgómag", latin: "Helianthus annuus", csalad: "Asteraceae", kep: "Helianthi_annui_semen.jpg" },
+	    "Hibisci sabdariffae flos": { magyardrog: "Hibiszkusz virág", latin: "Hibiscus sabdariffa", csalad: "Malvaceae", kep: "Hibisci_sabdariffae_flos.jpg" },
+	    "Lini semen": { magyardrog: "Lenmag", latin: "Linum usitatissimum", csalad: "Linaceae", kep: "Lini_semen.jpg" },
+	    "Malvae sylvestris flos": { magyardrog: "Erdei mályva virág", latin: "Malva sylvestris", csalad: "Malvaceae", kep: "Malvae_sylvestris_flos.jpg" },
+ 	    "Rosae pseudo-fructus": { magyardrog: "Csipkebogyó áltermés", latin: "Rosa canina", csalad: "Rosaceae", kep: "Rosae_pseudo-fructus.jpg" },
+	    "Taraxaci radix": { magyardrog: "Gyermekláncfű gyökér", latin: "Taraxacum officinale", csalad: "Asteraceae", kep: "Taraxaci_radix.jpg" },
+	    "Verbasci flos": { magyardrog: "Ökörfarkkóró virág", latin: "Verbascum thapsus", csalad: "Scrophulariaceae", kep: "Verbasci_flos.jpg" }
+};
 
 
 function showSubMenu(type) {
@@ -158,7 +187,8 @@ function showSubMenu(type) {
     document.getElementById("sketchem-container").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "none";
     document.getElementById("szamolas-container").style.display = "none"; 
-    document.getElementById("tabla-container").style.display = "none";   
+    document.getElementById("tabla-container").style.display = "none";
+    document.getElementById("makroszkopikus-container").style.display = "none"
 	
     document.getElementById(type + "SubMenu").style.display = "block";
 }
@@ -187,8 +217,42 @@ function retryRecognition() {
     document.getElementById("name-input").value = "";
     document.getElementById("name-output").innerHTML = "";
 }
+// Makroszkópikus játék indítása
+function startMakroszkopikusJatek() {
+    document.getElementById("novenyfelismeresSubMenu").style.display = "none";
+    document.getElementById("makroszkopikus-container").style.display = "block";
+    ujNoveny();
+}
+
+// Új növény betöltése
+function ujNoveny() {
+    const novenyNevek = Object.keys(novenyAdatok);
+    aktualisNoveny = novenyNevek[Math.floor(Math.random() * novenyNevek.length)];
+    document.getElementById("noveny-kep").src = "DROGZH1MOL/" + novenyAdatok[aktualisNoveny].kep;
+    document.getElementById("magyar-noveny").value = "";
+    document.getElementById("latin-noveny").value = "";
+    document.getElementById("csalad-noveny").value = "";
+    document.getElementById("noveny-eredmeny").innerHTML = "";
+}
+
+// Ellenőrzés
+function checkNoveny() {
+    const elvart = novenyAdatok[aktualisNoveny];
+    const valaszok = {
+        magyar: document.getElementById("magyar-noveny").value.trim(),
+        latin: document.getElementById("latin-noveny").value.trim(),
+        csalad: document.getElementById("csalad-noveny").value.trim()
+    };
+
+    let eredmeny = "<strong>Eredmények:</strong><br>";
+    eredmeny += `Magyar név: ${(valaszok.magyar === elvart.magyardrog) ? "✔️" : "❌"}<br>`;
+    eredmeny += `Latin név: ${(valaszok.latin === elvart.latin) ? "✔️" : "❌"}<br>`;
+    eredmeny += `Család: ${(valaszok.csalad === elvart.csalad) ? "✔️" : "❌"}`;
+
+    document.getElementById("noveny-eredmeny").innerHTML = eredmeny;
+}
         let currentMolecule = "";
-        
+        let aktualisNoveny = "";
         
 
      
@@ -202,7 +266,8 @@ function retryRecognition() {
             document.getElementById("sketchem-container").style.display = "none";
             document.getElementById("kepfelismeres-container").style.display = "none";
 	    document.getElementById("szamolas-container").style.display = "none";
-    	    document.getElementById("tabla-container").style.display = "none"; 
+    	    document.getElementById("tabla-container").style.display = "none";
+	    document.getElementById("makroszkopikus-container").style.display = "none";
 	}
         
         function startFormulaDrawing() {
@@ -244,6 +309,7 @@ function retryRecognition() {
             document.getElementById("smiles-output").innerHTML = "";
         }
 	    // Számolási feladatok indítása
+	    
 function startSzamolas(jatekTipus) {
     document.getElementById("szamolasSubMenu").style.display = "none";
     document.getElementById("szamolas-container").style.display = "block";
