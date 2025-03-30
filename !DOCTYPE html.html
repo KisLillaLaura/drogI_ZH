@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Növényismereti Játék</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .menu, .submenu {
+            margin-top: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        .submenu {
+            display: none;
+        }
+        #sketchem-container {
+            display: none;
+        }
+	#kepfelismeres-container {
+    	    display: none;
+	}
+    </style>
+</head>
+<body>
+    <h1>Üdvözöllek a Növényismereti Játékban!</h1>
+    <p>Válassz egy feladattípust:</p>
+    
+    <div class="menu" id="mainMenu">
+        <button onclick="showSubMenu('kep')">Növényfelismerés</button>
+        <button onclick="showSubMenu('szamolas')">Számolási feladatok</button>
+        <button onclick="showSubMenu('tabla')">Táblázatkitöltés</button>
+        <button onclick="showSubMenu('kepletek')">Képletek</button>
+    </div>
+
+    <!-- Almenük -->
+    <div class="submenu" id="kepletekSubMenu">
+        <h2>Képletek</h2>
+        <button onclick="startFormulaRecognition()">Képlet felismerés</button>
+        <button onclick="startFormulaDrawing()">Képlet rajzolás</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+    </div>
+
+    <div id="sketchem-container">
+        <h2>Rajzold le az alábbi molekulát:</h2>
+        <h3 id="molekula-name"></h3>
+        <p><button onclick="openSketChem()">🖌 SketChem megnyitása</button></p>
+        <p>Miután elkészültél, exportáld a SMILES kódot (felső ikonok, lefele nyilas téglalap; .smi .smiles formátum), és másold be ide:</p>
+        <input type="text" id="smiles-input" placeholder="Illeszd be a SMILES kódot">
+        <br>
+        <p>Válaszd ki a csoportot:</p>
+        <select id="csoport-select">
+            <option value="Szénhidrátok">Szénhidrátok</option>
+            <option value="Lipidek">Lipidek</option>
+            <option value="Növényi savak">Növényi savak</option>
+        </select>
+        <br>
+        <button onclick="exportSMILES()">✅ Ellenőrzés</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+        <p id="smiles-output"></p>
+        <button onclick="newMolecule()">Új molekula</button>
+        <button onclick="retry()">Újrapróbálás</button>
+    </div>
+
+    <div id="kepfelismeres-container">
+    	<h2>Mi a képen látható molekula neve?</h2>
+    	<img id="molekula-kep" src="" alt="Molekula képe" style="max-width: 300px; margin: 20px auto; display: block;">
+    	<input type="text" id="name-input" placeholder="Írd be a molekula nevét">
+    	<br><br>
+    	<button onclick="checkName()">✅ Ellenőrzés</button>
+    	<button onclick="goBack()">🔙 Vissza</button>
+    	<p id="name-output"></p>
+    	<button onclick="newMoleculeRecognition()">Új molekula</button>
+    	<button onclick="retryRecognition()">Újrapróbálás</button>
+    </div>
+
+    <script>
+        const molekulaAdatok = {
+            "D-glükóz": { smiles: "OC1OC(CO)C(O)C(O)C1O", csoport: "Szénhidrátok", image: "D-glukoz.jpg" },
+            "D-fruktóz": { smiles: "OCC1OC(O)(CO)C(O)C1O", csoport: "Szénhidrátok", image: "D-fruktoz.jpg" },
+            "D-arabinóz": { smiles: "OC1C(O)C(O)C(O)OC1", csoport: "Szénhidrátok", image: "D-arabinoz.jpg" },
+            "szacharóz": { smiles: "OCC1OC(C(C(C1O)O)O)OC2(CO)C(O)C(O)C(O2)CO", csoport: "Szénhidrátok", image: "szacharoz.jpg" },
+            "D-ramnóz": { smiles: "CC1C(O)C(O)C(O)C(O1)O", csoport: "Szénhidrátok", image: "D-ramnoz.jpg" },
+            "D-xilit (xilitol)": { smiles: "OCC(O)C(O)C(O)CO", csoport: "Szénhidrátok", image: "D-xilit.jpg" },
+            "palmitinsav": { smiles: "CCCCCCCCCCCCCCCC(O)=O", csoport: "Lipidek", image: "palmitinsav.jpg" },
+            "sztearinsav": { smiles: "CCCCCCCCCCCCCCCCC(=O)O", csoport: "Lipidek", image: "sztearinsav.jpg" },
+            "olajsav": { smiles: "CCCCCCCCC=CCCCCCCCC(O)=O", csoport: "Lipidek", image: "olajsav.jpg" },
+            "linolsav": { smiles: "CCCCCC=CCC=CCCCCCCCC(O)=O", csoport: "Lipidek", image: "linolsav.jpg" },
+            "ricinolsav": { smiles: "CCCCCCCCC=CCCCCC(O)CC(=O)O", csoport: "Lipidek", image: "ricinolsav.jpg" },
+            "α-linolénsav": { smiles: "CCC=CCC=CCC=CCCCCCCCC(O)=O", csoport: "Lipidek", image: "alpha-linolensav.jpg" },
+            "γ-linolénsav": { smiles: "CCCCCC=CCC=CCC=CCCCCC(O)=O", csoport: "Lipidek", image: "gamma-linolensav.jpg" },
+            "β-szitoszterol": { smiles: "OC1CC=2C(C)(CC1)[CH]3[CH](CC=2)[CH]4C(C)(CC3)C(CC4)C(C)CCC(CC)C(C)C", csoport: "Lipidek", image: "beta-szitoszterol.jpg" },
+            "citromsav": { smiles: "O=C(O)CC(O)(C(=O)O)CC(O)=O", csoport: "Növényi savak", image: "citromsav.jpg" },
+            "almasav": { smiles: "O=C(O)CC(O)C(=O)O", csoport: "Növényi savak", image: "almasav.jpg" },
+            "borkősav": { smiles: "OC(=O)C(O)C(O)C(=O)O", csoport: "Növényi savak", image: "borkosav.jpg" },
+            "aszkorbinsav": { smiles: "O=C1O[CH](C(CO)O)C(O)=C1O", csoport: "Növényi savak", image: "aszkorbinsav.jpg" },
+            "sikimisav": { smiles: "O=C(O)C=1CC(O)C(O)C(C=1)O", csoport: "Növényi savak", image: "sikimisav.jpg" }
+        };
+// Függvények frissítése
+function showSubMenu(type) {
+    document.getElementById("mainMenu").style.display = "none";
+    document.getElementById("kepletekSubMenu").style.display = "none";
+    document.getElementById("sketchem-container").style.display = "none";
+    document.getElementById("kepfelismeres-container").style.display = "none";
+    
+    if (type === 'kepletek') {
+        document.getElementById("kepletekSubMenu").style.display = "block";
+    } else {
+        document.getElementById(type + "SubMenu").style.display = "block";
+    }
+}
+
+function startFormulaRecognition() {
+    document.getElementById("kepletekSubMenu").style.display = "none";
+    document.getElementById("kepfelismeres-container").style.display = "block";
+    newMoleculeRecognition();
+}
+
+// Új függvények a képfelismeréshez
+function newMoleculeRecognition() {
+    const moleculeNames = Object.keys(molekulaAdatok);
+    currentMolecule = moleculeNames[Math.floor(Math.random() * moleculeNames.length)];
+    document.getElementById("molekula-kep").src = "DROG1ZHMOL/" + molekulaAdatok[currentMolecule].image;
+}
+
+function checkName() {
+    const answer = document.getElementById("name-input").value.trim();
+    const result = (answer.toLowerCase() === currentMolecule.toLowerCase()) ? "✔️ Helyes" : "❌ Helytelen";
+    document.getElementById("name-output").innerHTML = result;
+}
+
+function retryRecognition() {
+    document.getElementById("name-input").value = "";
+    document.getElementById("name-output").innerHTML = "";
+}
+        let currentMolecule = "";
+        
+        function showSubMenu(type) {
+            document.getElementById("mainMenu").style.display = "none";
+            document.getElementById("kepletekSubMenu").style.display = "none";
+            document.getElementById("sketchem-container").style.display = "none";
+            
+            document.getElementById(type + "SubMenu").style.display = "block";
+        }
+
+        function goBack() {
+            document.getElementById("mainMenu").style.display = "block";
+            document.getElementById("kepletekSubMenu").style.display = "none";
+            document.getElementById("sketchem-container").style.display = "none";
+        }
+        
+        function startFormulaDrawing() {
+            document.getElementById("kepletekSubMenu").style.display = "none";
+            document.getElementById("sketchem-container").style.display = "block";
+            newMolecule();  // új molekula kiválasztása
+        }
+
+        function openSketChem() {
+            window.open("https://itayyaakov.github.io/SketChem/");
+        }
+
+        function exportSMILES() {
+            const smilesCode = document.getElementById("smiles-input").value.trim();
+            const selectedCsoport = document.getElementById("csoport-select").value;
+
+            if (smilesCode && selectedCsoport) {
+                const molekula = molekulaAdatok[currentMolecule];
+                const isSmilesCorrect = smilesCode === molekula.smiles;
+                const isCsoportCorrect = selectedCsoport === molekula.csoport;
+
+                let resultText = `SMILES: ${isSmilesCorrect ? "✔️ Helyes" : "❌ Helytelen"}<br>`;
+                resultText += `Csoport: ${isCsoportCorrect ? "✔️ Helyes" : "❌ Helytelen"}`;
+
+                document.getElementById("smiles-output").innerHTML = resultText;
+            } else {
+                alert("Töltse ki az összes mezőt!");
+            }
+        }
+
+        function newMolecule() {
+            const moleculeNames = Object.keys(molekulaAdatok);
+            currentMolecule = moleculeNames[Math.floor(Math.random() * moleculeNames.length)];
+            document.getElementById("molekula-name").innerText = currentMolecule;
+        }
+
+        function retry() {
+            document.getElementById("smiles-input").value = "";
+            document.getElementById("smiles-output").innerHTML = "";
+        }
+    </script>
+</body>
+</html>
