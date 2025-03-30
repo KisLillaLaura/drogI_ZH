@@ -35,7 +35,7 @@
     <p>Válassz egy feladattípust:</p>
     
     <div class="menu" id="mainMenu">
-        <button onclick="showSubMenu('kep')">Növényfelismerés</button>
+        <button onclick="showSubMenu('novenyfelismeres')">Növényfelismerés</button>
         <button onclick="showSubMenu('szamolas')">Számolási feladatok</button>
         <button onclick="showSubMenu('tabla')">Táblázatkitöltés</button>
         <button onclick="showSubMenu('kepletek')">Képletek</button>
@@ -114,18 +114,20 @@
             "sikimisav": { smiles: "O=C(O)C=1CC(O)C(O)C(C=1)O", csoport: "Növényi savak", image: "sikimisav.jpg" }
         };
 // Függvények frissítése
+
 function showSubMenu(type) {
+    // Minden elem elrejtése
     document.getElementById("mainMenu").style.display = "none";
     document.getElementById("kepletekSubMenu").style.display = "none";
+    document.getElementById("novenyfelismeresSubMenu").style.display = "none";
     document.getElementById("sketchem-container").style.display = "none";
     document.getElementById("kepfelismeres-container").style.display = "none";
-    document.getElementById("makroszkopikus-container").style.display = "none";
-    document.getElementById("novenyfelismeresSubMenu").style.display = "none";
-    
-    if (type === 'kepletek') {
-        document.getElementById("kepletekSubMenu").style.display = "block";
-    } else {
+
+    // Almenü megjelenítése
+    if (type === 'kepletek' || type === 'novenyfelismeres') {
         document.getElementById(type + "SubMenu").style.display = "block";
+    } else {
+        console.error("Ismeretlen almenü típus:", type);
     }
 }
 
@@ -156,12 +158,15 @@ function retryRecognition() {
         
         
 
-        function goBack() {
-            document.getElementById("mainMenu").style.display = "block";
+     
+    	function goBack() {
+    // Minden elem elrejtése
+    	    document.getElementById("mainMenu").style.display = "block";
             document.getElementById("kepletekSubMenu").style.display = "none";
+            document.getElementById("novenyfelismeresSubMenu").style.display = "none";
             document.getElementById("sketchem-container").style.display = "none";
-	    document.getElementById("kepfelismeres-container").style.display = "none";
-        }
+            document.getElementById("kepfelismeres-container").style.display = "none";
+	}
         
         function startFormulaDrawing() {
             document.getElementById("kepletekSubMenu").style.display = "none";
