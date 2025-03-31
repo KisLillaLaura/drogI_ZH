@@ -31,6 +31,11 @@
 	#szamolas-container, #tabla-container {
     	    display: none;
 	}
+	/* Ideiglenes elrejtés */
+	#szamolasSubMenu, #tablaSubMenu,
+	#szamolas-container, #tabla-container {
+    	display: none !important;
+	}
     </style>
 </head>
 <body>
@@ -39,8 +44,6 @@
     
     <div class="menu" id="mainMenu">
         <button onclick="showSubMenu('novenyfelismeres')">Növényfelismerés</button>
-        <button onclick="showSubMenu('szamolas')">Számolási feladatok</button>
-        <button onclick="showSubMenu('tabla')">Táblázatkitöltés</button>
         <button onclick="showSubMenu('kepletek')">Képletek</button>
     </div>
 
@@ -328,6 +331,12 @@ function checkMikro() {
 
 function showSubMenu(type) {
     // Minden elem elrejtése
+    const availableMenus = ['novenyfelismeres', 'kepletek'];
+    
+    if (!availableMenus.includes(type)) {
+        console.log("Ez a menüpont ideiglenesen nem elérhető");
+        return;
+    }
     document.getElementById("mainMenu").style.display = "none";
     document.getElementById("kepletekSubMenu").style.display = "none";
     document.getElementById("novenyfelismeresSubMenu").style.display = "none";
