@@ -253,19 +253,26 @@ const mikroAdatok = {};
 const mikroFeatureList = new Set();
 const mikroDrogList = new Set();
 
-// Adatfeldolgozás javítva
+
 mikroKepek.forEach(kep => {
     const [featureRaw, drogFile] = kep.split("__");
-    const feature = featureRaw.replace(/_/g, " ");
-    const drog = drogFile.split('_pulvis')[0]; // Eltávolítjuk a _pulvis részt
     
-    if (!mikroAdatok[drog]) mikroAdatok[drog] = [];
-    mikroAdatok[drog].push({ feature, kep });
+    // Feature név formázása
+    const feature = featureRaw.replace(/_/g, " ");
+    
+    // Drog név formázása
+    const cleanDrog = drogFile
+        .replace(/_pulvis/g, "")
+        .replace(/.jpg/g, "")    
+        .replace(/_/g, " ");    
+
+    if (!mikroAdatok[cleanDrog]) mikroAdatok[cleanDrog] = [];
+    mikroAdatok[cleanDrog].push({ feature, kep });
     
     mikroFeatureList.add(feature);
-    mikroDrogList.add(drog);
+    mikroDrogList.add(cleanDrog);
 });
-
+	    
 // Játék indítása
 function startMikroszkopikusJatek() {
     document.getElementById("novenyfelismeresSubMenu").style.display = "none";
