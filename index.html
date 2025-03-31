@@ -133,6 +133,22 @@
     	<p id="noveny-eredmeny"></p>
     	<button onclick="ujNoveny()">Új növény</button>
     </div>
+    <!-- Mikroszkópikus felismerés konténer -->
+    <div id="mikroszkopikus-container" class="submenu">
+        <h2>Mikroszkópikus felismerés</h2>
+        <div id="mikro-kepek"></div>
+        <div id="mikro-valaszok">
+                <div id="mikro-feature-dropdowns"></div>
+                <div class="input-group">
+                    <label>Melyik drog szövetei láthatók?</label>
+                    <select id="mikro-drog-select"></select>
+                </div>
+        </div>
+    	<button onclick="checkMikro()">✅ Ellenőrzés</button>
+    	<button onclick="goBack()">🔙 Vissza</button>
+    	<p id="mikro-eredmeny"></p>
+    	<button onclick="ujMikroJatek()">Új játék</button>
+</div>
 
 	<!-- Számolási feladatok konténer -->
     <div id="szamolas-container" class="submenu">
