@@ -219,33 +219,33 @@
 	};
 // Mikroszkópos képek adatbázisa (példa)
 	const mikroKepek = [
-    	"Ca-oxalát_rozetta__Althaeae_radix_pulvis.jpg",
-    	"Ca-oxalát_rozetta__Malvae_sylvestris_flos.jpg",
-    	"Ca-oxalát_rozetta__Rosae_pseudo-fructus.jpg",  
-    	"Ca-oxalát_rozetta__Tiliae_flos.jpg", 
-    	"Csészelevél__Tiliae_flos.jpg",
-    	"Csillagszőr__Althaeae_folium_pulvis.jpg",
-    	"Csillagszőr__Malvae_sylvestris_flos.jpg", 
-    	"Csillagszőr__Tiliae_flos.jpg",  
-    	"Egyséjtű_fedőszőr__Verbasci_flos.jpg", 
-    	"Egyséjtű_fedőszőr__Malvae_sylvestris_flos.jpg",
-    	"Emeletesen_elágazó_fedőszőr__Verbasci_flos.jpg",  
-    	"Endospermium__Lini_semen_pulvis.jpg",
-    	"Hullámos_alakú_szőr__Malvae_sylvestris_flos.jpg", 
-    	"Keményítőszemcsék__Althaeae_radix_pulvis.jpg", 
-    	"Lipidszemcsék__Lini_semen_pulvis.jpg",  
-    	"Mezofillum__Malvae_sylvestris_flos.jpg",
-    	"Nyálka__Althaeae_radix_pulvis.jpg",
-    	"Nyálkaepidermisz__Lini_semen_pulvis.jpg",
-    	"Pigmentsejtek__Lini_semen_pulvis.jpg",
-    	"Pollenszem__Althaeae_folium_pulvis.jpg",
-    	"Pollenszem__Malvae_sylvestris_flos.jpg",
-    	"Portok__Verbasci_flos.jpg",
-    	"Rost__Althaeae_radix_pulvis.jpg",
-    	"Serteszőr__Rosae_pseudo-fructus.jpg",
-    	"Szklereida_sejtek__Rosae_pseudo-fructus.jpg",
-    	"Trachea__Althaeae_radix_pulvis.jpg",
-    	"Zsíros_olajcseppek_karotinoidokkal__Rosae_pseudo-fructus.jpg"
+    		"Ca-oxalát_rozetta__Althaeae_radix_pulvis.jpg",
+    		"Ca-oxalát_rozetta__Malvae_sylvestris_flos.jpg",
+    		"Ca-oxalát_rozetta__Rosae_pseudo-fructus.jpg",  
+    		"Ca-oxalát_rozetta__Tiliae_flos.jpg", 
+    		"Csészelevél__Tiliae_flos.jpg",
+    		"Csillagszőr__Althaeae_folium_pulvis.jpg",
+    		"Csillagszőr__Malvae_sylvestris_flos.jpg", 
+    		"Csillagszőr__Tiliae_flos.jpg",  
+    		"Egyséjtű_fedőszőr__Verbasci_flos.jpg", 
+    		"Egyséjtű_fedőszőr__Malvae_sylvestris_flos.jpg",
+    		"Emeletesen_elágazó_fedőszőr__Verbasci_flos.jpg",  
+    		"Endospermium__Lini_semen_pulvis.jpg",
+    		"Hullámos_alakú_szőr__Malvae_sylvestris_flos.jpg", 
+    		"Keményítőszemcsék__Althaeae_radix_pulvis.jpg", 
+    		"Lipidszemcsék__Lini_semen_pulvis.jpg",  
+    		"Mezofillum__Malvae_sylvestris_flos.jpg",
+    		"Nyálka__Althaeae_radix_pulvis.jpg",
+    		"Nyálkaepidermisz__Lini_semen_pulvis.jpg",
+    		"Pigmentsejtek__Lini_semen_pulvis.jpg",
+    		"Pollenszem__Althaeae_folium_pulvis.jpg",
+    		"Pollenszem__Malvae_sylvestris_flos.jpg",
+    		"Portok__Verbasci_flos.jpg",
+    		"Rost__Althaeae_radix_pulvis.jpg",
+    		"Serteszőr__Rosae_pseudo-fructus.jpg",
+    		"Szklereida_sejtek__Rosae_pseudo-fructus.jpg",
+    		"Trachea__Althaeae_radix_pulvis.jpg",
+    		"Zsíros_olajcseppek_karotinoidokkal__Rosae_pseudo-fructus.jpg"
 	];
 
 // Adatok kinyerése
@@ -254,12 +254,12 @@
 	const mikroDrogList = new Set();
 
 	mikroKepek.forEach(kep => {
-    	const [featureRaw, drog] = kep.split("__");
-    	const feature = featureRaw.replace(/_/g, " "); // "_" helyett szóköz
-    	if (!mikroAdatok[drog]) mikroAdatok[drog] = [];
-    	mikroAdatok[drog].push({ feature, kep });
-    	mikroFeatureList.add(feature);
-    	mikroDrogList.add(drog); // Drog név tisztítása
+    		const [featureRaw, drog] = kep.split("__");
+    		const feature = featureRaw.replace(/_/g, " "); // "_" helyett szóköz
+    		if (!mikroAdatok[drog]) mikroAdatok[drog] = [];
+    		mikroAdatok[drog].push({ feature, kep });
+    		mikroFeatureList.add(feature);
+    		mikroDrogList.add(drog); // Drog név tisztítása
 	});
 
 
@@ -303,6 +303,65 @@ function retryRecognition() {
     document.getElementById("name-input").value = "";
     document.getElementById("name-output").innerHTML = "";
 }
+
+
+function startMikroszkopikusJatek() {
+    document.getElementById("novenyfelismeresSubMenu").style.display = "none";
+    document.getElementById("mikroszkopikus-container").style.display = "block";
+    
+    // Véletlenszerű drog kiválasztása
+    const drogok = Object.keys(mikroAdatok);
+    currentMikroDrog = drogok[Math.floor(Math.random() * drogok.length)];
+    
+    // Képek megjelenítése
+    const kepekDiv = document.getElementById("mikro-kepek");
+    kepekDiv.innerHTML = mikroAdatok[currentMikroDrog]
+        .map(kep => `<img src="DROG1ZH1MIKROTESZT/${kep.kep}" style="max-width: 200px; margin: 10px;">`)
+        .join("");
+
+    // Feature dropdownok
+    const dropdownsDiv = document.getElementById("mikro-feature-dropdowns");
+    dropdownsDiv.innerHTML = Array.from(mikroFeatureList)
+        .map(feature => `
+            <div class="input-group">
+                <label>${feature}:</label>
+                <select class="mikro-feature-select">
+                    <option value="">Válassz!</option>
+                    ${Array.from(mikroDrogList).map(drog => `<option>${drog}</option>`).join("")}
+                </select>
+            </div>
+        `).join("");
+
+    // Drog dropdown feltöltése
+    const drogSelect = document.getElementById("mikro-drog-select");
+    drogSelect.innerHTML = Array.from(mikroDrogList).map(drog => `<option>${drog}</option>`).join("");
+}
+function checkMikro() {
+    const valaszok = Array.from(document.querySelectorAll(".mikro-feature-select"))
+        .map(select => select.value);
+    const drogValasz = document.getElementById("mikro-drog-select").value;
+
+    // Helyes válaszok kinyerése
+    const helyesDrog = currentMikroDrog.split("_pulvis")[0];
+    const helyesValaszok = mikroAdatok[currentMikroDrog].map(kep => kep.feature);
+
+    // Pontozás
+    let pontok = 0;
+    valaszok.forEach((valasz, index) => {
+        if (valasz === helyesDrog && helyesValaszok.includes(Array.from(mikroFeatureList)[index])) pontok++;
+    });
+
+    const eredmeny = `
+        ${pontok}/${valaszok.length} helyes<br>
+        Drog válasz: ${drogValasz === helyesDrog ? "✔️" : "❌"}
+    `;
+    document.getElementById("mikro-eredmeny").innerHTML = eredmeny;
+}
+
+function ujMikroJatek() {
+    startMikroszkopikusJatek();
+    document.getElementById("mikro-eredmeny").innerHTML = "";
+}
 // Makroszkópikus játék indítása
 function startMakroszkopikusJatek() {
     document.getElementById("novenyfelismeresSubMenu").style.display = "none";
@@ -342,6 +401,7 @@ function checkNoveny() {
 }
         let currentMolecule = "";
         let aktualisNoveny = "";
+	let currentMikroDrog = "";
         
 
      
