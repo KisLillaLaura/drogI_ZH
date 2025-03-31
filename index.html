@@ -274,6 +274,7 @@ function checkNoveny() {
 
     let eredmeny = "<strong>Eredmények:</strong><br>";
     eredmeny += `Magyar név: ${(valaszok.magyar === elvart.magyardrog) ? "✔️" : "❌"}<br>`;
+    eredmeny += `Drog latin neve: ${(valaszok.latinDrog === aktualisNoveny) ? "✔️" : "❌"}<br>`;
     eredmeny += `Latin név: ${(valaszok.latin === elvart.latin) ? "✔️" : "❌"}<br>`;
     eredmeny += `Család: ${(valaszok.csalad === elvart.csalad) ? "✔️" : "❌"}`;
 
