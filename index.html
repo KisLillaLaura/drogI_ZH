@@ -113,15 +113,19 @@
     	<h2>Makroszkópikus növényfelismerés</h2>
     	<img id="noveny-kep" src="" alt="Növény képe" style="max-width: 400px; margin: 20px auto; display: block;">
     	<div class="input-group">
-        	<label>Növény magyar neve:</label>
-        	<input type="text" id="magyar-noveny">
+        	<label>Drog magyar neve:</label>
+        	<input type="text" id="magyar-drog">
     	</div>
+  	<div class="input-group">
+        	<label>Drog latin neve:</label>
+        	<input type="text" id="latin-drog">
+	</div>
     	<div class="input-group">
         	<label>Növény latin neve:</label>
         	<input type="text" id="latin-noveny">
     	</div>
     	<div class="input-group">
-        	<label>Növény családja:</label>
+        	<label>Növény családja latinul:</label>
         	<input type="text" id="csalad-noveny">
     	</div>
     	<button onclick="checkNoveny()">✅ Ellenőrzés</button>
@@ -251,7 +255,8 @@ function ujNoveny() {
     const novenyNevek = Object.keys(novenyAdatok);
     aktualisNoveny = novenyNevek[Math.floor(Math.random() * novenyNevek.length)];
     document.getElementById("noveny-kep").src = "DROGZH1JOTESZT/" + novenyAdatok[aktualisNoveny].kep;
-    document.getElementById("magyar-noveny").value = "";
+    document.getElementById("magyar-drog").value = "";
+    document.getElementById("latin-drog").value = "";
     document.getElementById("latin-noveny").value = "";
     document.getElementById("csalad-noveny").value = "";
     document.getElementById("noveny-eredmeny").innerHTML = "";
@@ -261,7 +266,8 @@ function ujNoveny() {
 function checkNoveny() {
     const elvart = novenyAdatok[aktualisNoveny];
     const valaszok = {
-        magyar: document.getElementById("magyar-noveny").value.trim(),
+        magyar: document.getElementById("magyar-drog").value.trim(),
+	latinDrog: document.getElementById("latin-drog").value.trim(),
         latin: document.getElementById("latin-noveny").value.trim(),
         csalad: document.getElementById("csalad-noveny").value.trim()
     };
