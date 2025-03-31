@@ -217,6 +217,50 @@
 	    "Taraxaci radix": { magyardrog: "Gyermekláncfű gyökér", latin: "Taraxacum officinale", csalad: "Asteraceae", kep: "Taraxaci_radix.jpg" },
 	    "Verbasci flos": { magyardrog: "Ökörfarkkóró virág", latin: "Verbascum thapsus", csalad: "Scrophulariaceae", kep: "Verbasci_flos.jpg" }
 	};
+// Mikroszkópos képek adatbázisa (példa)
+	const mikroKepek = [
+    	"Ca-oxalát_rozetta__Althaeae_radix_pulvis.jpg",
+    	"Ca-oxalát_rozetta__Malvae_sylvestris_flos.jpg",
+    	"Ca-oxalát_rozetta__Rosae_pseudo-fructus.jpg",  
+    	"Ca-oxalát_rozetta__Tiliae_flos.jpg", 
+    	"Csészelevél__Tiliae_flos.jpg",
+    	"Csillagszőr__Althaeae_folium_pulvis.jpg",
+    	"Csillagszőr__Malvae_sylvestris_flos.jpg", 
+    	"Csillagszőr__Tiliae_flos.jpg",  
+    	"Egyséjtű_fedőszőr__Verbasci_flos.jpg", 
+    	"Egyséjtű_fedőszőr__Malvae_sylvestris_flos.jpg",
+    	"Emeletesen_elágazó_fedőszőr__Verbasci_flos.jpg",  
+    	"Endospermium__Lini_semen_pulvis.jpg",
+    	"Hullámos_alakú_szőr__Malvae_sylvestris_flos.jpg", 
+    	"Keményítőszemcsék__Althaeae_radix_pulvis.jpg", 
+    	"Lipidszemcsék__Lini_semen_pulvis.jpg",  
+    	"Mezofillum__Malvae_sylvestris_flos.jpg",
+    	"Nyálka__Althaeae_radix_pulvis.jpg",
+    	"Nyálkaepidermisz__Lini_semen_pulvis.jpg",
+    	"Pigmentsejtek__Lini_semen_pulvis.jpg",
+    	"Pollenszem__Althaeae_folium_pulvis.jpg",
+    	"Pollenszem__Malvae_sylvestris_flos.jpg",
+    	"Portok__Verbasci_flos.jpg",
+    	"Rost__Althaeae_radix_pulvis.jpg",
+    	"Serteszőr__Rosae_pseudo-fructus.jpg",
+    	"Szklereida_sejtek__Rosae_pseudo-fructus.jpg",
+    	"Trachea__Althaeae_radix_pulvis.jpg",
+    	"Zsíros_olajcseppek_karotinoidokkal__Rosae_pseudo-fructus.jpg"
+	];
+
+// Adatok kinyerése
+	const mikroAdatok = {};
+	const mikroFeatureList = new Set();
+	const mikroDrogList = new Set();
+
+	mikroKepek.forEach(kep => {
+    	const [featureRaw, drog] = kep.split("__");
+    	const feature = featureRaw.replace(/_/g, " "); // "_" helyett szóköz
+    	if (!mikroAdatok[drog]) mikroAdatok[drog] = [];
+    	mikroAdatok[drog].push({ feature, kep });
+    	mikroFeatureList.add(feature);
+    	mikroDrogList.add(drog); // Drog név tisztítása
+	});
 
 
 function showSubMenu(type) {
