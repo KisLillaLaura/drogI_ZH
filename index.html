@@ -412,16 +412,22 @@ function checkNoveny() {
     const elvart = novenyAdatok[aktualisNoveny];
     const valaszok = {
         magyar: document.getElementById("magyar-drog").value.trim(),
-	latinDrog: document.getElementById("latin-drog").value.trim(),
+        latinDrog: document.getElementById("latin-drog").value.trim(),
         latin: document.getElementById("latin-noveny").value.trim(),
         csalad: document.getElementById("csalad-noveny").value.trim()
     };
 
     let eredmeny = "<strong>Eredmények:</strong><br>";
-    eredmeny += `Magyar név: ${(valaszok.magyar === elvart.magyardrog) ? "✔️" : "❌ (helyes: ${elvart.magyardrog})"}<br>`;
-    eredmeny += `Drog latin neve: ${(valaszok.latinDrog === aktualisNoveny) ? "✔️" : "❌ (helyes: ${aktualisNoveny})"}<br>`;
-    eredmeny += `Latin név: ${(valaszok.latin === elvart.latin) ? "✔️" : "❌ (helyes: ${elvart.latin})"}<br>`;
-    eredmeny += `Család: ${(valaszok.csalad === elvart.csalad) ? "✔️" : "❌ (helyes: ${elvart.csalad})"}`;
+    
+    function checkField(userAnswer, correctAnswer, fieldName) {
+        const isCorrect = userAnswer.toLowerCase() === correctAnswer.toLowerCase();
+        return `${fieldName}: ${isCorrect ? "✔️" : `❌ (helyes: ${correctAnswer})`}<br>`;
+    }
+
+    eredmeny += checkField(valaszok.magyar, elvart.magyardrog, "Magyar név");
+    eredmeny += checkField(valaszok.latinDrog, aktualisNoveny, "Drog latin neve");
+    eredmeny += checkField(valaszok.latin, elvart.latin, "Latin név");
+    eredmeny += checkField(valaszok.csalad, elvart.csalad, "Család");
 
     document.getElementById("noveny-eredmeny").innerHTML = eredmeny;
 }
