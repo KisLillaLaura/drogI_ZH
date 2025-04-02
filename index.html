@@ -308,18 +308,26 @@ function startMikroszkopikusJatek() {
 
 // Ellenőrzés logika javítva
 function checkMikro() {
-    const valaszok = Array.from(document.querySelectorAll(".mikro-feature-select"))
-        .map(select => select.value);
+    const valaszSelects = document.querySelectorAll(".mikro-feature-select");
     const drogValasz = document.getElementById("mikro-drog-select").value;
-
-    // Helyes válaszok
     const helyesValaszok = mikroAdatok[currentMikroDrog].map(k => k.feature);
+
+    let eredmeny = "<strong>Eredmények:</strong><br>";
     
-    // Pontozás
-    let pontok = 0;
-    valaszok.forEach((valasz, index) => {
-        if (valasz === helyesValaszok[index]) pontok++;
+    // Képek ellenőrzése
+    valaszSelects.forEach((select, index) => {
+        const valasz = select.value;
+        const helyes = helyesValaszok[index];
+        const isCorrect = valasz === helyes;
+        
+        eredmeny += `Kép ${index+1}: ${isCorrect ? "✔️" : `❌ (helyes: ${helyes})`}<br>`;
     });
+
+    // Drog név ellenőrzése
+    eredmeny += `<br>Drog válasz: ${drogValasz === currentMikroDrog ? "✔️" : `❌ (helyes: ${currentMikroDrog})`}`;
+
+    document.getElementById("mikro-eredmeny").innerHTML = eredmeny;
+}
 
     const eredmeny = `
         Képletek: ${pontok}/${helyesValaszok.length} helyes<br>
@@ -367,7 +375,7 @@ function newMoleculeRecognition() {
 
 function checkName() {
     const answer = document.getElementById("name-input").value.trim();
-    const result = (answer.toLowerCase() === currentMolecule.toLowerCase()) ? "✔️ Helyes" : "❌ Helytelen";
+    const result = (answer.toLowerCase() === currentMolecule.toLowerCase()) ? "✔️ Helyes" : "❌ Helytelen (helyes válasz: ${correctAnswer})";
     document.getElementById("name-output").innerHTML = result;
 }
 
@@ -414,10 +422,10 @@ function checkNoveny() {
     };
 
     let eredmeny = "<strong>Eredmények:</strong><br>";
-    eredmeny += `Magyar név: ${(valaszok.magyar === elvart.magyardrog) ? "✔️" : "❌"}<br>`;
-    eredmeny += `Drog latin neve: ${(valaszok.latinDrog === aktualisNoveny) ? "✔️" : "❌"}<br>`;
-    eredmeny += `Latin név: ${(valaszok.latin === elvart.latin) ? "✔️" : "❌"}<br>`;
-    eredmeny += `Család: ${(valaszok.csalad === elvart.csalad) ? "✔️" : "❌"}`;
+    eredmeny += `Magyar név: ${(valaszok.magyar === elvart.magyardrog) ? "✔️" : "❌ (helyes: ${elvart.magyardrog})"}<br>`;
+    eredmeny += `Drog latin neve: ${(valaszok.latinDrog === aktualisNoveny) ? "✔️" : "❌ (helyes: ${elvart.aktualisNoveny})"}<br>`;
+    eredmeny += `Latin név: ${(valaszok.latin === elvart.latin) ? "✔️" : "❌ (helyes: ${elvart.latin})"}<br>`;
+    eredmeny += `Család: ${(valaszok.csalad === elvart.csalad) ? "✔️" : "❌ (helyes: ${elvart.csalad})"}`;
 
     document.getElementById("noveny-eredmeny").innerHTML = eredmeny;
 }
