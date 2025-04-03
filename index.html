@@ -45,6 +45,7 @@
     <div class="menu" id="mainMenu">
         <button onclick="showSubMenu('novenyfelismeres')">Növényfelismerés</button>
         <button onclick="showSubMenu('kepletek')">Képletek</button>
+	<button onclick="showSubMenu('tabla')">Táblázatok
     </div>
 
     <!-- Almenük -->
@@ -170,6 +171,133 @@
 	
 
     <script>
+	const fitokemiaTablazat = [
+    	    {
+                azonositas: "keményítő",
+                reakcio: "komplexképzés",
+                reagens: "lugol-oldat",
+                eszleles: "sötétkék/fekete elszíneződés"
+    	    },
+            {
+                azonositas: "inulin vagy hidroxi-metil-furfural",
+                reakcio: "Seliwanoff",
+                reagens: "HCl, rezorcin, hő",
+                eszleles: "piros"
+            },
+            {
+                azonositas: "arabinoxilán",
+                reakcio: "Bial",
+                reagens: "HCl + orcinol + FeCl3 + hő",
+                eszleles: "türkiz"
+            },
+            {
+                azonositas: "A-vitamin",
+                reakcio: "Carr-Price",
+                reagens: "kloroform, SbCl3 kristály",
+                eszleles: "kék"
+            },
+            {
+                azonositas: "avasság (epihidrin-aldehid)",
+                reakcio: "gyűrű felnyílás",
+                reagens: "HCl, floroglucin",
+                eszleles: "vörös"
+            },
+            {
+                azonositas: "Aszkorbinsav",
+                reakcio: "redox-reakció",
+                reagens: "diklórfenol-indofenol",
+                eszleles: "fehérkioltó folt a VRK-n"
+            }
+        ];
+
+        function startTabla(jatekTipus) {
+            document.getElementById("tablaSubMenu").style.display = "none";
+            document.getElementById("tabla-container").style.display = "block";
+            document.getElementById("tabla-cim").innerText = jatekTipus;
+    
+            if(jatekTipus === "Általános fitokémia") {
+                let tablaHTML = `
+                    <table border="1" style="margin: 0 auto; width: 80%;">
+                        <thead>
+                            <tr>
+                                <th>Azonosítási reakció</th>
+                                <th>Reagens</th>
+                                <th>Észlelés</th>
+                            </tr>
+                        </thead>
+                        <tbody>`;
+        
+        // Véletlenszerű sorrend és kitöltés
+                const shuffled = [...fitokemiaTablazat].sort(() => 0.5 - Math.random());
+        
+                shuffled.forEach((sor, index) => {
+                    const randomCol = Math.floor(Math.random() * 3); // 0-2 között
+                    const options = fitokemiaTablazat.map(x => 
+                        randomCol === 0 ? x.azonositas : 
+                        randomCol === 1 ? x.reagens : 
+                        x.eszleles
+                    ).filter((v, i, a) => a.indexOf(v) === i); // Egyediek
+            
+                    tablaHTML += `<tr>`;
+            
+                    for(let col = 0; col < 3; col++) {
+                        if(col === randomCol) {
+                            // Megadott érték
+                            const value = randomCol === 0 ? sor.azonositas : 
+                                 randomCol === 1 ? sor.reagens : 
+                                 sor.eszleles;
+                            tablaHTML += `<td style="background-color:#f0f0f0">${value}</td>`;
+                        } else {
+                            // Legördülő menü
+                            const colName = col === 0 ? "azonositas" : 
+                                           col === 1 ? "reagens" : "eszleles";
+                            tablaHTML += `
+                                <td>
+                                    <select id="tabla-${index}-${col}">
+                                        <option value="">Válassz...</option>
+                                        ${options.map(opt => 
+                                            `<option value="${opt}">${opt}</option>`
+                                        ).join('')}
+                                    </select>
+                                </td>`;
+                        }
+                    }
+            
+                    tablaHTML += `</tr>`;
+                });
+        
+                tablaHTML += `</tbody></table><br>
+                    <button onclick="checkTabla()">Ellenőrzés</button>`;
+        
+                document.getElementById("tabla-container").innerHTML = tablaHTML;
+            }
+        }
+
+function checkTabla() {
+    let correct = 0;
+    const shuffled = [...fitokemiaTablazat];
+    
+    shuffled.forEach((sor, rowIndex) => {
+        for(let col = 0; col < 3; col++) {
+            const select = document.getElementById(`tabla-${rowIndex}-${col}`);
+            if(select) {
+                const selected = select.value;
+                const correctValue = col === 0 ? sor.azonositas : 
+                                    col === 1 ? sor.reagens : 
+                                    sor.eszleles;
+                
+                if(selected === correctValue) {
+                    correct++;
+                    select.style.backgroundColor = "#a0ffa0";
+                } else if(selected) {
+                    select.style.backgroundColor = "#ffa0a0";
+                }
+            }
+        }
+    });
+    
+    alert(`Eredmény: ${correct} helyes válasz a ${shuffled.length * 2} lehetőségből!`);
+}	
         const molekulaAdatok = {
             "D-glükóz": { smiles: "OC1OC(CO)C(O)C(O)C1O", csoport: "Szénhidrátok", image: "B-D-glukoz.jpg" },
             "D-fruktóz": { smiles: "OCC1OC(O)(CO)C(O)C1O", csoport: "Szénhidrátok", image: "B-D-fruktoz.jpg" },
@@ -333,7 +461,7 @@ function checkMikro() {
 
 function showSubMenu(type) {
     // Minden elem elrejtése
-    const availableMenus = ['novenyfelismeres', 'kepletek'];
+    const availableMenus = ['novenyfelismeres', 'kepletek', 'tabla'];
     
     if (!availableMenus.includes(type)) {
         console.log("Ez a menüpont ideiglenesen nem elérhető");
@@ -448,6 +576,7 @@ function checkNoveny() {
             document.getElementById("kepfelismeres-container").style.display = "none";
 	    document.getElementById("szamolas-container").style.display = "none";
     	    document.getElementById("tabla-container").style.display = "none";
+	    document.getElementById("tabla-container").style.display = "none";
 	    document.getElementById("makroszkopikus-container").style.display = "none";
 	    document.getElementById("mikroszkopikus-container").style.display = "none";
 	}
