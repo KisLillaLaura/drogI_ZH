@@ -168,6 +168,34 @@
         <!-- Ide jönnek a táblázatok -->
         <button onclick="goBack()">🔙 Vissza</button>
     </div>
+	<!-- Táblázatkitöltés konténerek -->
+
+    <!-- Általános fitokémia konténer -->
+    <div id="fitokemia_altalanos-container" class="submenu">
+        <h2>Általános fitokémia</h2>
+        <div id="fitokemia_altalanos-content"></div>
+        <button onclick="checkTabla('altalanos')">✅ Ellenőrzés</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+        <p id="fitokemia_altalanos-eredmeny"></p>
+    </div>
+
+<!-- Drogok fitokémiája konténer -->
+    <div id="fitokemia-container" class="submenu">
+        <h2>Drogok fitokémiája</h2>
+        <div id="fitokemia-content"></div>
+        <button onclick="checkTabla('drogok')">✅ Ellenőrzés</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+        <p id="fitokemia-eredmeny"></p>
+    </div>
+
+<!-- Általános fitoanalitika konténer -->
+    <div id="fitoanalitika-container" class="submenu">
+        <h2>Általános fitoanalitika</h2>
+        <div id="fitoanalitika-content"></div>
+        <button onclick="checkTabla('analitika')">✅ Ellenőrzés</button>
+        <button onclick="goBack()">🔙 Vissza</button>
+        <p id="fitoanalitika-eredmeny"></p>
+    </div>
 	
 
     <script>
@@ -576,7 +604,9 @@ function checkNoveny() {
             document.getElementById("kepfelismeres-container").style.display = "none";
 	    document.getElementById("szamolas-container").style.display = "none";
     	    document.getElementById("tabla-container").style.display = "none";
-	    document.getElementById("tabla-container").style.display = "none";
+	    document.getElementById("fitokemia_altalanos-container").style.display = "none";
+   	    document.getElementById("fitokemia-container").style.display = "none";
+   	    document.getElementById("fitoanalitika-container").style.display = "none";
 	    document.getElementById("makroszkopikus-container").style.display = "none";
 	    document.getElementById("mikroszkopikus-container").style.display = "none";
 	}
